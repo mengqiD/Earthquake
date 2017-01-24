@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,25 +21,24 @@ import java.util.List;
  */
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
-    public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
+    public EarthquakeAdapter(Context context,List<Earthquake> earthquakes){
         super(context, 0, earthquakes);
     }
-
     //control how the list displays.
-    public View getView(int position, View contextView, ViewGroup parent) {
-        //check if there is an existing view
-        View listView = contextView;
-        if (listView == null) {
-            listView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+    public View getView(int position, View contextView, ViewGroup parent){
+    //check if there is an existing view
+        View listView=contextView;
+        if(listView==null){
+            listView= LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent,false);
         }
 
         //get the earthquake info associated with
-        Earthquake currentQuake = getItem(position);
+        Earthquake currentQuake=getItem(position);
 
 
         //get magnitude info
-        double magnitude = currentQuake.getMagnitude();
-        TextView magView = (TextView) listView.findViewById(R.id.mag);
+        double magnitude=currentQuake.getMagnitude();
+        TextView magView=(TextView) listView.findViewById(R.id.mag);
         magView.setText(formatMag(magnitude));
 
         //get primalocation info
@@ -46,15 +47,15 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         TextView locView2 = (TextView) listView.findViewById(R.id.secondLocation);
 
         //separate location info
-        String location = currentQuake.getLocation();
-        if (location.contains("of")) {
+        String location=currentQuake.getLocation();
+        if(location.contains("of")) {
             String[] locations = location.split("of ");
             String secLocation = locations[0];
             String priLocation = locations[1];
             //set location info
             locView.setText(priLocation);
-            locView2.setText(secLocation + "of");
-        } else {
+            locView2.setText(secLocation+"of");
+        }else{
             locView.setText(currentQuake.getLocation());
             locView2.setText(R.string.near);
         }
@@ -71,14 +72,14 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         magnitudeCircle.setColor(magnitudeColor);
 
         //get date info
-        Date dateObject = new Date(currentQuake.getDate());
-        String dateFormat = formatDate(dateObject);
-        TextView dateView = (TextView) listView.findViewById(R.id.date);
+        Date dateObject=new Date(currentQuake.getDate());
+        String dateFormat=formatDate(dateObject);
+        TextView dateView=(TextView) listView.findViewById(R.id.date);
         dateView.setText(dateFormat);
 
         //get time info
-        TextView timeView = (TextView) listView.findViewById(R.id.time);
-        String timeFormat = formatTime(dateObject);
+        TextView timeView= (TextView) listView.findViewById(R.id.time);
+        String timeFormat=formatTime(dateObject);
         timeView.setText(timeFormat);
 
         return listView;
@@ -87,56 +88,54 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
     private int getMagnitudeColor(double magnitude) {
         int colorID;
-        int mag = (int) Math.floor(magnitude);
-        switch (mag) {
+        int mag= (int) Math.floor(magnitude);
+        switch (mag){
             case 0:
             case 1:
-                colorID = R.color.magnitude1;
+                colorID=R.color.magnitude1;
                 break;
             case 2:
-                colorID = R.color.magnitude2;
+                colorID=R.color.magnitude2;
                 break;
             case 3:
-                colorID = R.color.magnitude3;
+                colorID=R.color.magnitude3;
                 break;
             case 4:
-                colorID = R.color.magnitude4;
+                colorID=R.color.magnitude4;
                 break;
             case 5:
-                colorID = R.color.magnitude5;
+                colorID=R.color.magnitude5;
                 break;
             case 6:
-                colorID = R.color.magnitude6;
+                colorID=R.color.magnitude6;
                 break;
             case 7:
-                colorID = R.color.magnitude7;
+                colorID=R.color.magnitude7;
                 break;
             case 8:
-                colorID = R.color.magnitude8;
+                colorID=R.color.magnitude8;
                 break;
             case 9:
-                colorID = R.color.magnitude9;
+                colorID=R.color.magnitude9;
                 break;
             default:
-                colorID = R.color.magnitude10plus;
+                colorID=R.color.magnitude10plus;
                 break;
         }
-        return ContextCompat.getColor(getContext(), colorID);
+        return ContextCompat.getColor(getContext(),colorID);
     }
 
     private String formatDate(Date dateObject) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
         return dateFormat.format(dateObject);
     }
-
     private String formatTime(Date dateObject) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         return timeFormat.format(dateObject);
     }
-
-    private String formatMag(double mag) {
-        DecimalFormat format = new DecimalFormat("0.0");
-        String output = format.format(mag);
+    private String formatMag(double mag){
+        DecimalFormat format=new DecimalFormat("0.0");
+        String output=format.format(mag);
         return output;
     }
 }

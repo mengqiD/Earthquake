@@ -5,8 +5,12 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Mengqi on 1/23/17.
@@ -52,9 +56,9 @@ public class QueryUtils {
                 double mag = properties.getDouble("mag");
                 String location = properties.getString("place");
                 long time = properties.getLong("time");
-                String url = properties.getString("url");
+                String url=properties.getString("url");
 
-                Earthquake earthquake1 = new Earthquake(mag, location, time, url);
+                Earthquake earthquake1 = new Earthquake(mag, location, time,url);
                 earthquakes.add(earthquake1);
             }
 
